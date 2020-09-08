@@ -11,7 +11,6 @@
     "test": "./tests/test-npm-install; ./node_modules/.bin/nyc ./node_modules/.bin/_mocha -r aws-sdk \"./tests/**/*.spec.js\"; ./tests/test-npm-clean",
     "test-light": "./tests/test-npm-install; ./node_modules/.bin/nyc ./node_modules/.bin/_mocha -r aws-sdk \"./tests/**/!(serverless-artillery|npm).spec.js\"; ./tests/test-npm-clean",
     "test-integration": "./tests/test-npm-install; ./node_modules/.bin/_mocha --timeout=1200000 ./tests/integration/index; ./tests/test-npm-clean",
-    "test-upgrade": "./tests/test-npm-install; ./node_modules/.bin/_mocha --timeout 90000 ./tests/integration/versioning/upgrade.js; ./tests/test-npm-clean",
     "coverage-report": "./node_modules/.bin/nyc report --reporter=lcov",
     "lint": "./node_modules/.bin/eslint . bin/serverless-artillery",
     "fix": "./node_modules/.bin/eslint --fix . bin/serverless-artillery",
@@ -38,7 +37,7 @@
   },
   "homepage": "https://github.com/Nordstrom/serverless-artillery#readme",
   "dependencies": {
-    "ajv": "^6.7.0",
+    "ajv": "^6.12.3",
     "aws-sdk": "^2.388.0",
     "bluebird": "^3.5.3",
     "diff": "^3.5.0",
