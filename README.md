@@ -2,6 +2,9 @@
 
 [//]: # (Thanks to https://www.divio.com/en/blog/documentation/)
 
+# NOTE
+This project has been forked from serverless-artillery to support serverless^2.0.0. The node runtime has also been updated from 10.x to 12.x as AWS is dropping support.
+
 # Introduction
 Combine [`serverless`](https://serverless.com) with [`artillery`](https://artillery.io) and you get `serverless-artillery` (a.k.a. `slsart`). 
 
