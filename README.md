@@ -173,7 +173,7 @@ npm install -g serverless
 ### Installing serverless-artillery
 Now you can install serverless-artillery on your local machine using the following command.
 ```
-npm install -g serverless-artillery
+npm install -g serverless2-artillery
 ```
 To check that the installation succeeded, run:
 ```
