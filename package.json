@@ -1,6 +1,6 @@
 {
   "name": "serverless2-artillery",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A serverless performance testing tool. `serverless` + `artillery` = crush.  a.k.a. Orbital Laziers [sic]",
   "main": "index.js",
   "bin": {
@@ -13,7 +13,8 @@
     "test-integration": "./tests/test-npm-install; ./node_modules/.bin/_mocha --timeout=1200000 ./tests/integration/index; ./tests/test-npm-clean",
     "coverage-report": "./node_modules/.bin/nyc report --reporter=lcov",
     "lint": "./node_modules/.bin/eslint . bin/serverless-artillery",
-    "fix": "./node_modules/.bin/eslint --fix . bin/serverless-artillery"
+    "fix": "./node_modules/.bin/eslint --fix . bin/serverless-artillery",
+    "publish": "npm publish --registry https://artifactory.cicd.service.bom.gov.au/artifactory/api/npm/apiplatform-npm-local"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,7 @@
   "homepage": "https://github.com/Nordstrom/serverless-artillery#readme",
   "dependencies": {
     "ajv": "^6.12.3",
-    "aws-sdk": "^2.388.0",
+    "aws-sdk": "^2.1046.0",
     "bluebird": "^3.5.3",
     "diff": "^3.5.0",
     "get-stdin": "^6.0.0",
@@ -46,7 +47,7 @@
     "rimraf": "^2.7.1",
     "semver": "^5.5.0",
     "shortid": "^2.2.14",
-    "yargs": "^13.1.0"
+    "yargs": "^17.3.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -55,20 +56,19 @@
     "coveralls": "^3.0.1",
     "cross-spawn": "^6.0.5",
     "es6-promisify": "^6.0.1",
-    "eslint": "^5.12.0",
+    "eslint": "^8.6.0",
     "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.12.3",
     "lodash.merge": "^4.6.2",
-    "mocha": "^5.1.1",
+    "mocha": "^9.1.3",
     "ncp": "^2.0.0",
-    "np": "^5.1.3",
-    "nyc": "^13.2.0",
+    "nyc": "^15.1.0",
     "proxyquire": "^2.1.0",
     "quibble": "^0.5.5",
     "recursive-readdir": "^2.2.2",
-    "serverless": "^1.40.0",
+    "serverless": "^2.70.0",
     "sinon": "^5.0.2",
     "sinon-chai": "^3.3.0",
     "tmp": "0.0.33"
