@@ -13,7 +13,8 @@
     "test-integration": "./tests/test-npm-install; ./node_modules/.bin/_mocha --timeout=1200000 ./tests/integration/index; ./tests/test-npm-clean",
     "coverage-report": "./node_modules/.bin/nyc report --reporter=lcov",
     "lint": "./node_modules/.bin/eslint . bin/serverless-artillery",
-    "fix": "./node_modules/.bin/eslint --fix . bin/serverless-artillery"
+    "fix": "./node_modules/.bin/eslint --fix . bin/serverless-artillery",
+    "publish": "npm publish --registry https://artifactory.cicd.service.bom.gov.au/artifactory/api/npm/apiplatform-npm-local"
   },
   "repository": {
     "type": "git",
