@@ -5,4 +5,4 @@ ENV PATH=$PATH:/home/node/.npm-global/bin
 
 USER node
 RUN npm i -g serverless 
-RUN npm i -g serverless2-artillery
+RUN npm i -g bom-serverless-artillery

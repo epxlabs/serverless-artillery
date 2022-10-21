@@ -1,6 +1,6 @@
 {
-  "name": "serverless2-artillery",
-  "version": "0.5.3",
+  "name": "bom-serverless-artillery",
+  "version": "1.0.0-beta9",
   "description": "A serverless performance testing tool. `serverless` + `artillery` = crush.  a.k.a. Orbital Laziers [sic]",
   "main": "index.js",
   "bin": {
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nordstrom/serverless-artillery.git"
+    "url": "git+https://github.com/AusBOM/serverless-artillery.git"
   },
   "keywords": [
     "serverless",
@@ -33,9 +33,9 @@
   "author": "Erik Erikson, Greg Smith, Rob Gruhl, Danno Mayer, Andy Day, Grace Lee, Sayna Parsi",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Nordstrom/serverless-artillery/issues"
+    "url": "https://github.com/AusBOM/serverless-artillery/issues"
   },
-  "homepage": "https://github.com/Nordstrom/serverless-artillery#readme",
+  "homepage": "https://github.com/AusBOM/serverless-artillery#readme",
   "dependencies": {
     "ajv": "^6.12.3",
     "aws-sdk": "^2.1046.0",
@@ -68,7 +68,7 @@
     "proxyquire": "^2.1.0",
     "quibble": "^0.5.5",
     "recursive-readdir": "^2.2.2",
-    "serverless": "^2.70.0",
+    "serverless": "^3.23.0",
     "sinon": "^5.0.2",
     "sinon-chai": "^3.3.0",
     "tmp": "0.0.33"

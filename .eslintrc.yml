@@ -18,6 +18,7 @@ rules:
     - error
     - allowForLoopAfterthoughts: true
   no-unexpected-multiline: error
+  import/extensions: off
   semi:
     - error
     - never
