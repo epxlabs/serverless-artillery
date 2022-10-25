@@ -169,7 +169,7 @@ npm install -g serverless
 ### Installing serverless-artillery
 Now you can install serverless-artillery on your local machine using the following command.
 ```
-npm install -g 3-artillery
+npm install -g bom-serverless-artillery
 ```
 To check that the installation succeeded, run:
 ```
@@ -469,7 +469,7 @@ provider:
                 - Ref: 'AWS::Region'
                 - Ref: 'AWS::AccountId'
                 - 'function'
-                - '${self:service}-${opt:stage, self:provider.stage}-loadGenerator*' # must match function name
+                - 'slsart-${opt:stage}-loadGenerator*' # must match function name
     # This policy allows the function to publish notifications to the SNS topic defined below with logical ID monitoringAlerts
     - Effect: 'Allow'
       Action:
@@ -489,7 +489,7 @@ functions:
           - TopicName
     events:
       - schedule:
-          name: '${self:service}-${opt:stage, self:provider.stage}-monitoring' # !!Do not edit this name!!
+          name: 'slsart-${opt:stage}-monitoring' # !!Do not edit this name!!
           description: The scheduled event for running the function in monitoring mode
           rate: rate(1 minute)
           ########################################################################################################################
@@ -516,7 +516,7 @@ resources:
     monitoringAlerts: # !!Do not edit this name!!
       Type: 'AWS::SNS::Topic'
       Properties:
-        DisplayName: '${self:service} Monitoring Alerts'
+        DisplayName: 'slsart Monitoring Alerts'
 #        Subscription: # docs at https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sns-subscription.html
 #          - Endpoint: http://<host>/<path> # the endpoint is an URL beginning with "http://"
 #            Protocol: http
