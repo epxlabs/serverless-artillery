@@ -35,12 +35,14 @@ pipeline {
     }
 
     stage('test: integration') {
+      environment {
+        PATH = "$WORKSPACE/bin:$PATH"
+      }
       steps {
         script {
           withAccount('load') {
             // Put slsart in PATH
             sh 'cp bin/serverless-artillery bin/slsart'
-            env.PATH = "./bin:$PATH"
 
             sh 'npm run test-integration'
           }
