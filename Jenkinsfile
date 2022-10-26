@@ -38,6 +38,7 @@ pipeline {
       steps {
         script {
           withAccount('load') {
+            sh 'npm install -g .'
             sh 'npm run test-integration'
           }
         }

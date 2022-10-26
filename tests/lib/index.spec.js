@@ -1125,7 +1125,7 @@ scenarios:
           .then(slsart.impl.getScriptText)
           .then((yml) => {
             const sls = yaml.safeLoad(yml)
-            expect(sls.service).to.not.have.string('_')
+            expect(sls.service).to.not.have.string('s')
           })
           .should.be.fulfilled
       })
