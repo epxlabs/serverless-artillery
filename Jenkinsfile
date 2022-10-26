@@ -38,7 +38,10 @@ pipeline {
       steps {
         script {
           withAccount('load') {
-            sh 'npm install -g .'
+            // Put slsart in PATH
+            sh 'cp bin/serverless-artillery bin/slsart'
+            env.PATH = "./bin:$PATH"
+
             sh 'npm run test-integration'
           }
         }
