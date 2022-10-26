@@ -28,6 +28,22 @@ pipeline {
       }
     }
 
+    stage('test: unit') {
+      steps {
+        sh 'npm run test'
+      }
+    }
+
+    stage('test: integration') {
+      steps {
+        script {
+          withAccount('load') {
+            sh 'npm run test-integration'
+          }
+        }
+      }
+    }
+
     stage('deploy') {
       when { branch 'master' }
       steps {

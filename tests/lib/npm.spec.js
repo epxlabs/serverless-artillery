@@ -37,7 +37,7 @@ describe('./lib/npm.js:exports', function npmExports() { // eslint-disable-line 
     }
     it('installs project dependencies and not dev dependencies',
       function createUniqueArtifacts() { // eslint-ignore-line prefer-arrow-callback
-        this.timeout(60000)
+        this.timeout(90000)
         return fs.mkdirAsync(tmpdir)
           .then(() => {
             replaceCwd(tmpdir)
