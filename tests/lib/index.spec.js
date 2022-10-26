@@ -404,7 +404,7 @@ scenarios:
 
     const validService = () => ({
       provider: {
-        iamRoleStatements: [],
+        iam: { role: { statements: [] } },
       },
       functions: {
         [slsart.constants.TestFunctionName]: {},
@@ -412,7 +412,7 @@ scenarios:
     })
     const validServiceWithAssets = () => {
       const service = validService()
-      service.provider.iamRoleStatements.push({
+      service.provider.iam.role.statements.push({
         Effect: 'Allow',
         Action: ['sns:Publish'],
         Resource: {

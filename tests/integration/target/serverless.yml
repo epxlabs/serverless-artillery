@@ -2,13 +2,15 @@ service: slsart-integration-target
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs16.x
   endpointType: regional
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - logs:FilterLogEvents
-      Resource: arn:aws:logs:*:*:log-group:/aws/lambda/slsart-integration-target-${self:provider.stage}-test:*
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:FilterLogEvents
+          Resource: arn:aws:logs:*:*:log-group:/aws/lambda/slsart-integration-target-${self:provider.stage}-test:*
 
 functions:
   test:

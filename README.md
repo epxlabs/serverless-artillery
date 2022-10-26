@@ -1,9 +1,5 @@
-# Serverless-artillery [![Build Status](https://travis-ci.org/Nordstrom/serverless-artillery.svg?branch=master)](https://travis-ci.org/Nordstrom/serverless-artillery) [![Coverage Status](https://coveralls.io/repos/github/Nordstrom/serverless-artillery/badge.svg?branch=master)](https://coveralls.io/github/Nordstrom/serverless-artillery?branch=master)
-
-[//]: # (Thanks to https://www.divio.com/en/blog/documentation/)
-
 # NOTE
-This project has been forked from serverless-artillery to support serverless^2.0.0. The node runtime has also been updated from 10.x to 12.x as AWS is dropping support.
+This project has been forked from serverless-artillery to support serverless^3.0.0. The node runtime has also been updated from 10.x to 16.x as AWS is dropping support.
 
 # Introduction
 Combine [`serverless`](https://serverless.com) with [`artillery`](https://artillery.io) and you get `serverless-artillery` (a.k.a. `slsart`). 
@@ -165,7 +161,7 @@ You can install serverless-artillery on your local machine as follows.
 #### 1. Node JS
 Before installing serverless-artillery, install Node JS from https://nodejs.org/en/download/ or with your operating system’s package manager. You can install the latest LTS version. We support any version higher than maintenance LTS (v8+).
 #### 2. Serverless Framework CLI
-Before installing serverless-artillery, install Serverless Framework CLI (a.k.a. Serverless) (v1.38+). It should be either installed globally or available in the local node_modules. To install globally use the following command.
+Before installing serverless-artillery, install Serverless Framework CLI (a.k.a. Serverless) (v3.0.0+). It should be either installed globally or available in the local node_modules. To install globally use the following command.
 ```
 npm install -g serverless
 ```
@@ -173,7 +169,7 @@ npm install -g serverless
 ### Installing serverless-artillery
 Now you can install serverless-artillery on your local machine using the following command.
 ```
-npm install -g serverless2-artillery
+npm install -g bom-serverless-artillery
 ```
 To check that the installation succeeded, run:
 ```
@@ -456,22 +452,24 @@ service: serverless-artillery-XnBa473psJ
 
 provider:
   name: aws
-  runtime: nodejs10.x
-  iamRoleStatements:
-    # This policy allows the function to invoke itself which is important if the script is larger than a single
-    # function can produce
-    - Effect: 'Allow'
-      Action:
-        - 'lambda:InvokeFunction'
-      Resource:
-        'Fn::Join':
-          - ':'
-          -
-            - 'arn:aws:lambda'
-            - Ref: 'AWS::Region'
-            - Ref: 'AWS::AccountId'
-            - 'function'
-            - '${self:service}-${opt:stage, self:provider.stage}-loadGenerator*' # must match function name
+  runtime: nodejs16.x
+  iam:
+    role:
+      statements:
+        # This policy allows the function to invoke itself which is important if the script is larger than a single
+        # function can produce
+        - Effect: 'Allow'
+          Action:
+            - 'lambda:InvokeFunction'
+          Resource:
+            'Fn::Join':
+              - ':'
+              -
+                - 'arn:aws:lambda'
+                - Ref: 'AWS::Region'
+                - Ref: 'AWS::AccountId'
+                - 'function'
+                - 'slsart-${opt:stage}-loadGenerator*' # must match function name
     # This policy allows the function to publish notifications to the SNS topic defined below with logical ID monitoringAlerts
     - Effect: 'Allow'
       Action:
@@ -491,7 +489,7 @@ functions:
           - TopicName
     events:
       - schedule:
-          name: '${self:service}-${opt:stage, self:provider.stage}-monitoring' # !!Do not edit this name!!
+          name: 'slsart-${opt:stage}-monitoring' # !!Do not edit this name!!
           description: The scheduled event for running the function in monitoring mode
           rate: rate(1 minute)
           ########################################################################################################################
@@ -518,7 +516,7 @@ resources:
     monitoringAlerts: # !!Do not edit this name!!
       Type: 'AWS::SNS::Topic'
       Properties:
-        DisplayName: '${self:service} Monitoring Alerts'
+        DisplayName: 'slsart Monitoring Alerts'
 #        Subscription: # docs at https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sns-subscription.html
 #          - Endpoint: http://<host>/<path> # the endpoint is an URL beginning with "http://"
 #            Protocol: http
@@ -560,7 +558,7 @@ The Serverless Framework automatically names the Lambda function based on the se
 - In this example function name will be set to `serverless-artillery-XnBa473psJ-dev-loadGenerator` while running `slsart deploy` command (note no stage name specified).
 #### c. [Load generator Lambda function](#load-generator-lambda-function-on-aws) permissions
 - In order to generate load the load generator Lambda needs to invoke itself.
-- The `iamRoleStatements` block in the `serverless.yml` gives the load generator Lambda function to invoke itself (`lambda:InvokeFunction`).
+- The `iam.role.statements` block in the `serverless.yml` gives the load generator Lambda function to invoke itself (`lambda:InvokeFunction`).
 
 ### 7. Customizing `serverless.yml`
 **NOTE:** Except for [one step for **_Nordstrom_** Engineers](#a-customization-for-nordstrom-engineers), all customizations are **optional** in the tutorial.
@@ -603,7 +601,9 @@ For example, you can use
 3. In `serverless.yml`, at the end of the following block (which already exists)
 ```
 provider:
-  iamRoleStatements:
+  iam:
+    role:
+      statements:
 ```
 add the following:
 ```

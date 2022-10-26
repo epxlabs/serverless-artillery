@@ -10,32 +10,34 @@
 
 # If the following value is changed, your service may be duplicated (this value is used to build the CloudFormation
 # Template script's name)
-service: serverless-artillery
+service: slsart
 
 provider:
   name: aws
-  runtime: nodejs12.x
-  iamRoleStatements:
-    # This policy allows the function to invoke itself which is important if the script is larger than a single
-    # function can produce
-    - Effect: 'Allow'
-      Action:
-        - 'lambda:InvokeFunction'
-      Resource:
-        'Fn::Join':
-          - ':'
-          -
-            - 'arn:aws:lambda'
-            - Ref: 'AWS::Region'
-            - Ref: 'AWS::AccountId'
-            - 'function'
-            - '${self:service}-${opt:stage, self:provider.stage}-loadGenerator*' # must match function name
-    # This policy allows the function to publish notifications to the SNS topic defined below with logical ID monitoringAlerts
-    - Effect: 'Allow'
-      Action:
-        - 'sns:Publish'
-      Resource:
-        Ref: monitoringAlerts # must match the SNS topic's logical ID
+  runtime: nodejs16.x
+  iam:
+    role:
+      statements:
+        # This policy allows the function to invoke itself which is important if the script is larger than a single
+        # function can produce
+        - Effect: 'Allow'
+          Action:
+            - 'lambda:InvokeFunction'
+          Resource:
+            'Fn::Join':
+              - ':'
+              -
+                - 'arn:aws:lambda'
+                - Ref: 'AWS::Region'
+                - Ref: 'AWS::AccountId'
+                - 'function'
+                - slsart-${opt:stage}-loadGenerator* # must match function name
+        # This policy allows the function to publish notifications to the SNS topic defined below with logical ID monitoringAlerts
+        - Effect: 'Allow'
+          Action:
+            - 'sns:Publish'
+          Resource:
+            Ref: monitoringAlerts # must match the SNS topic's logical ID
 functions:
   loadGenerator: # !!Do not edit this name!!
     handler: handler.handler    # the serverlessArtilleryLoadTester handler() method can be found in the handler.js source file
@@ -49,7 +51,7 @@ functions:
           - TopicName
     events:
       - schedule:
-          name: '${self:service}-${opt:stage, self:provider.stage}-monitoring' # !!Do not edit this name!!
+          name: 'slsart-${opt:stage}-monitoring' # !!Do not edit this name!!
           description: The scheduled event for running the function in monitoring mode
           rate: rate(1 minute)
           ########################################################################################################################
@@ -78,7 +80,7 @@ resources:
     monitoringAlerts: # !!Do not edit this name!!
       Type: 'AWS::SNS::Topic'
       Properties:
-        DisplayName: '${self:service} Monitoring Alerts'
+        DisplayName: 'slsart Monitoring Alerts'
 #        Subscription: # docs at https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sns-subscription.html
 #          - Endpoint: http://<host>/<path> # the endpoint is an URL beginning with "http://"
 #            Protocol: http
