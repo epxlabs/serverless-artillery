@@ -18,7 +18,21 @@ rules:
     - error
     - allowForLoopAfterthoughts: true
   no-unexpected-multiline: error
+
+  # TODO: Turn on these linting rules and fix violations
   import/extensions: off
+  import/no-dynamic-require: off
+  import/order: off
+  global-require: off
+  arrow-parens: off
+  operator-linebreak: off
+  lines-between-class-members: off
+  prefer-object-spread: off
+  function-call-argument-newline: off
+  implicit-arrow-linebreak: off
+  no-promise-executor-return: off
+  # End TODO
+
   semi:
     - error
     - never

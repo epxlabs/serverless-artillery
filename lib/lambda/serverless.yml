@@ -11,7 +11,7 @@
 # If the following value is changed, your service may be duplicated (this value is used to build the CloudFormation
 # Template script's name)
 service: slsart
-frameworkVersion: ^3.23.0
+
 provider:
   name: aws
   runtime: nodejs16.x
