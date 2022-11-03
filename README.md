@@ -334,10 +334,17 @@ Open `script.yml` with your favorite editor to see what it contains.
 # Thank you for trying serverless-artillery!
 # This default script is intended to get you started quickly.
 # There is a lot more that Artillery can do.
-@@ -349,1695 +16,3 @@ scenarios:
-      -
-        get:
-          url: "/"
+config:
+  # this hostname will be used as a prefix for each URI in the flow unless a complete URI is specified
+  target: "http://aws.amazon.com"
+  phases:
+    -
+      duration: 5
+      arrivalRate: 2
+scenarios:
+  - flow:
+    - get:
+      url: "/"
 ```
 
 </p>
