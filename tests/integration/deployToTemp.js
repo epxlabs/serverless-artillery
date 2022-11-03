@@ -92,7 +92,7 @@ const impl = {
 
   deploy: (exec = impl.execAsync()) =>
     directory =>
-      (process.env.DEBUG ? exec('sls deploy -v', { cwd: directory }) : exec('sls deploy', { cwd: directory })),
+      (process.env.DEBUG ? exec('sls deploy --verbose --stage integration-test', { cwd: directory }) : exec('sls deploy --stage integration-test', { cwd: directory })),
 
   tempLocation: (random = () => `${Date.now()}`, root = defaultRoot) =>
     (instanceId = random()) =>
@@ -131,7 +131,7 @@ const impl = {
     },
 
   remove: (exec = impl.execAsync()) =>
-    directory => exec('sls remove', { cwd: directory }),
+    directory => exec('sls remove --stage integration-test', { cwd: directory }),
 
   removeTempDeployment: (
     log = defaultLog,

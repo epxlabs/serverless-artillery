@@ -10,7 +10,7 @@ provider:
         - Effect: Allow
           Action:
             - logs:FilterLogEvents
-          Resource: arn:aws:logs:*:*:log-group:/aws/lambda/slsart-integration-target-${self:provider.stage}-test:*
+          Resource: arn:aws:logs:*:*:log-group:/aws/lambda/slsart-integration-target-${opt:stage}-test:*
 
 functions:
   test:
@@ -27,7 +27,7 @@ functions:
           path: list/{id}
           method: get
     environment:
-      TEST_LOG_GROUP: /aws/lambda/slsart-integration-target-${self:provider.stage}-test
+      TEST_LOG_GROUP: /aws/lambda/slsart-integration-target-${opt:stage}-test
 
 resources:
   Outputs:
@@ -36,10 +36,10 @@ resources:
        Value:
         Ref: ApiGatewayRestApi
        Export:
-        Name: ${self:service}-test-api
+        Name: slsart-integration-target-test-api
      ListApi:
        Description: The URL of the ApiGateway at which to invoke the get function
        Value:
         Ref: ApiGatewayRestApi
        Export:
-        Name: ${self:service}-list-api
+        Name: slsart-integration-target-list-api

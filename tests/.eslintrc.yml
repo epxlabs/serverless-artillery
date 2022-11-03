@@ -5,5 +5,10 @@ rules:
       - '**/*.spec.js'
       - '**/integration/**/*.js'
   no-unused-expressions: off
+  no-promise-executor-return: off
+  no-await-in-loop: off
+  max-classes-per-file: off
+  implicit-arrow-linebreak: off
+  object-curly-newline: off
 env:
   mocha: true

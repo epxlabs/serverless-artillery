@@ -28,6 +28,28 @@ pipeline {
       }
     }
 
+    stage('test: unit') {
+      steps {
+        sh 'npm run test'
+      }
+    }
+
+    stage('test: integration') {
+      environment {
+        PATH = "$WORKSPACE/bin:$PATH"
+      }
+      steps {
+        script {
+          withAccount('load') {
+            // Put slsart in PATH
+            sh 'cp bin/serverless-artillery bin/slsart'
+
+            sh 'npm run test-integration'
+          }
+        }
+      }
+    }
+
     stage('deploy') {
       when { branch 'master' }
       steps {

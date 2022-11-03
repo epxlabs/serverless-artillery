@@ -334,8 +334,6 @@ Open `script.yml` with your favorite editor to see what it contains.
 # Thank you for trying serverless-artillery!
 # This default script is intended to get you started quickly.
 # There is a lot more that Artillery can do.
-# You can find great documentation of the possibilities at:
-# https://artillery.io/docs/
 config:
   # this hostname will be used as a prefix for each URI in the flow unless a complete URI is specified
   target: "http://aws.amazon.com"
@@ -344,12 +342,9 @@ config:
       duration: 5
       arrivalRate: 2
 scenarios:
-  -
-    flow:
-      -
-        get:
-          url: "/"
-
+  - flow:
+    - get:
+      url: "/"
 ```
 
 </p>
@@ -445,11 +440,9 @@ Open `serverless.yml` with your favorite editor to see what it contains.
 # https://www.github.com/Nordstrom/serverless-artillery
 #
 # Thanks!
-
 # If the following value is changed, your service may be duplicated (this value is used to build the CloudFormation
 # Template script's name)
 service: serverless-artillery-XnBa473psJ
-
 provider:
   name: aws
   runtime: nodejs16.x
@@ -1011,9 +1004,7 @@ You will see an output similar to the following.
 <p>
 
 ```
-
 	Invoking test Lambda
-
 {
     "errors": 0,
     "reports": [
@@ -1070,9 +1061,7 @@ You will see an output similar to the following.
         "errors": {}
     }
 }
-
 	Your function invocation has completed.
-
 {
   "errors": 0,
   "reports": [
@@ -1175,9 +1164,7 @@ You will see an output similar to the following.
 <p>
 
 ```
-
 	Invoking test Lambda
-
 {
     "errors": 2,
     "reports": [
@@ -1241,9 +1228,7 @@ You will see an output similar to the following.
     },
     "errorMessage": "acceptance failure: scenarios run: 1, total errors: 2, error budget: 0"
 }
-
 	Your function invocation has completed.
-
 {
   "errors": 2,
   "reports": [
@@ -1309,7 +1294,6 @@ You will see an output similar to the following.
 }
 Results:
 FAILED acceptance failure: scenarios run: 1, total errors: 2, error budget: 0
-
 ```
 
 </p>
@@ -1476,7 +1460,6 @@ Below is sample email.
 ```
 Alert:
   monitoring failure: scenarios run: 5, total errors: 10, error budget: 4
-
 Logs:
 Full analysis:
 {
@@ -1570,12 +1553,9 @@ Full analysis:
   },
   "errorMessage": "monitoring failure: scenarios run: 5, total errors: 10, error budget: 4"
 }
-
-
 --
 If you wish to stop receiving notifications from this topic, please click or visit the link below to unsubscribe:
 https://sns.us-east-1.amazonaws.com/unsubscribe.html?SubscriptionArn=arn:aws:sns:us-east-1:515126931066:serverless-artillery-hPDAiDvuzL-ash-monitoringAlerts-3PPB71S63RM2:e11606d1-e70d-482c-82f9-eff26a760e68&Endpoint=ashmi.s.bhanushali@nordstrom.com
-
 Please do not reply directly to this email. If you have any questions or comments regarding this email, please contact us at https://aws.amazon.com/support
 ```
 
@@ -1587,9 +1567,7 @@ You will also see the following output at the command line.
 <p>
 
 ```
-
 	Invoking test Lambda
-
 {
     "errors": 10,
     "reports": [
@@ -1681,9 +1659,7 @@ You will also see the following output at the command line.
     },
     "errorMessage": "monitoring failure: scenarios run: 5, total errors: 10, error budget: 4"
 }
-
 	Your function invocation has completed.
-
 {
   "errors": 10,
   "reports": [
@@ -1777,7 +1753,6 @@ You will also see the following output at the command line.
 }
 Results:
 FAILED monitoring failure: scenarios run: 5, total errors: 10, error budget: 4
-
 ```
 
 </p>
@@ -1851,9 +1826,7 @@ sampling:
 # Detailed Usage
 ```
 $ slsart --help
-
 slsart <command>
-
 Commands:
   slsart deploy     Deploy a default version of the function that will execute
                     your Artillery scripts.  See
@@ -1878,7 +1851,6 @@ Commands:
   slsart configure  Create a local copy of the deployment assets for
                     modification and deployment.  See
                     https://serverless.com/framework/docs/ for documentation.
-
 Options:
   --help         Show help                                             [boolean]
   --version      Show version number                                   [boolean]
@@ -1895,12 +1867,10 @@ slsart deploy --help
 ```
 ```
 slsart deploy
-
 Deploy a default version of the function that will execute your Artillery
 scripts.  See
 https://serverless.com/framework/docs/providers/aws/cli-reference/deploy/ for
 reference.
-
 Options:
   --help         Show help                                             [boolean]
   --version      Show version number                                   [boolean]
@@ -1916,14 +1886,12 @@ slsart invoke --help
 ```
 ```
 slsart invoke
-
 Invoke your function with your Artillery script.  Will prefer a script given by
 `-d`, `--data`, `-p`, or `--path` over a `script.[yml|json]` file in the current
 directory over the default script.  Invocation mode will default to
 "performance" but adding the `-a` flag will run the script in "acceptance" mode.
 See https://serverless.com/framework/docs/providers/aws/cli-reference/invoke/
 for reference.
-
 Options:
   --help            Show help                                          [boolean]
   --version         Show version number                                [boolean]
@@ -1950,9 +1918,7 @@ slsart kill --help
 ```
 ```
 slsart kill
-
 Stop a currently running load test and remove the function.
-
 Options:
   --help         Show help                                             [boolean]
   --version      Show version number                                   [boolean]
@@ -1968,11 +1934,9 @@ slsart remove --help
 ```
 ```
 slsart remove
-
 Remove the function and the associated resources created for or by it.  See
 https://serverless.com/framework/docs/providers/aws/cli-reference/remove/ for
 reference.
-
 Options:
   --help         Show help                                             [boolean]
   --version      Show version number                                   [boolean]
@@ -1988,10 +1952,8 @@ slsart script --help
 ```
 ```
 slsart script
-
 Create a local Artillery script so that you can customize it for your specific
 load requirements.  See https://artillery.io for documentation.
-
 Options:
   --help          Show help                                            [boolean]
   --version       Show version number                                  [boolean]
@@ -2015,10 +1977,8 @@ slsart configure --help
 ```
 ```
 slsart configure
-
 Create a local copy of the deployment assets for modification and deployment.
 See https://docs.serverless.com for documentation.
-
 Options:
   --help         Show help                                             [boolean]
   --version      Show version number                                   [boolean]

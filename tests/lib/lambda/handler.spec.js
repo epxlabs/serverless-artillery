@@ -16,7 +16,7 @@ describe('AWS lambda handler', () => {
   describe('global behavior', () => {
     it('listens for unhandled rejections', () => {
       const rejectionListeners = process.listeners('unhandledRejection')
-      expect(rejectionListeners.length).to.equal(1)
+      expect(rejectionListeners.length).to.equal(2)
     })
   })
 

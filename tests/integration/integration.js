@@ -19,7 +19,7 @@ const executeScript = (tempFolder, slsartTempFolder, name, { script }, { testUrl
     { config: Object.assign({}, script.config, { target: testUrl }) }
   )
   writeFileSync(scriptFileName, safeDump(modifiedScript))
-  return exec(`slsart invoke -p ${scriptFileName}`, { cwd: slsartTempFolder })
+  return exec(`slsart invoke -p ${scriptFileName} --stage integration-test`, { cwd: slsartTempFolder })
 }
 
 // return the expected duration of the script
@@ -31,11 +31,22 @@ const awaitScriptDuration = script =>
   new Promise(resolve => setTimeout(resolve, approximateScriptDuration(script)))
 
 //  sorted by timestamp earliest -> latest
-const fetchListOfCalls = ({ listUrl }) =>
-  fetch(listUrl)
-    .then(response => response.json())
-    .then(json => JSON.parse(json))
-    .catch(err => log('failed to fetch list of calls: ', err.stack))
+const fetchListOfCalls = async ({ listUrl }) => {
+  let retryCount = 10
+  while (retryCount > 0) {
+    try {
+      const response = await fetch(listUrl)
+      const json = await response.json()
+      return JSON.parse(json)
+    } catch (err) {
+      log('request for list of calls failed:', err.stack)
+      retryCount -= 1
+      await new Promise((resolve) => { setTimeout(resolve, 1000) })
+    }
+  }
+
+  throw new Error('Failed to fetch list of calls')
+}
 
 // from a chronological list of calls, assert that the count of calls within the
 //  given time range is within the given min and max

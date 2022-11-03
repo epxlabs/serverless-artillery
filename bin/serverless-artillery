@@ -2,7 +2,7 @@
 
 const os = require('os')
 const packageJson = require('../package.json')
-const slsArt = require('../lib/')
+const slsArt = require('../lib')
 
 /**
  * Determine whether any of the given flags exists in the given argv (object representation)

@@ -45,12 +45,9 @@ class AwsInvoke {
 const slsFakeInit = () => Promise.resolve()
 class ServerlessFake {
   constructor() {
-    this.version = '1.0.3'
+    this.version = '3.23.0'
     this.pluginManager = {
       plugins: [new AwsInvoke()],
-    }
-    this.variables = {
-      populateService: () => BbPromise.resolve(),
     }
     this.service = {
       setFunctionNames: () => {},
@@ -65,6 +62,7 @@ class ServerlessFake {
   run() { return Promise.resolve(this).then((that) => { that.pluginManager.plugins[0].log({ Payload }) }) }
 }
 ServerlessFake.dirname = require.resolve(path.join('..', '..', 'node_modules', 'serverless'))
+ServerlessFake.resolveCliArgs = require('serverless/lib/cli/resolve-input')
 // ## Serverless Fake END ##
 
 let shortidResult = 'abcdefgh'
@@ -619,10 +617,12 @@ scenarios:
     describe('#serverlessRunner', () => {
       let implFindServicePathStub
       beforeEach(() => {
-        implFindServicePathStub = sinon.stub(slsart.impl, 'findServicePath').returns(Promise.resolve(__dirname))
+        implFindServicePathStub = sinon.stub(slsart.impl, 'findServicePath').returns(__dirname)
+        fs.writeFileSync(`${__dirname}/serverless.yml`, 'test: yaml')
       })
       afterEach(() => {
         implFindServicePathStub.restore()
+        fs.rmSync(`${__dirname}/serverless.yml`)
       })
       it('checks for SLS version compatibility', () =>
         slsart.impl.serverlessRunner({ debug: true, verbose: true })
@@ -630,13 +630,13 @@ scenarios:
       )
       it('rejects earlier SLS versions', () => {
         const slsVersion = slsart.constants.CompatibleServerlessSemver
-        slsart.constants.CompatibleServerlessSemver = '^1.0.4'
+        slsart.constants.CompatibleServerlessSemver = '^4.0.0'
         return expect(slsart.impl.serverlessRunner({})).to.eventually.be.rejected
           .then(() => { slsart.constants.CompatibleServerlessSemver = slsVersion })
       })
       it('rejects later SLS versions', () => {
         const slsVersion = slsart.constants.CompatibleServerlessSemver
-        slsart.constants.CompatibleServerlessSemver = '^0.0.0'
+        slsart.constants.CompatibleServerlessSemver = '^2.0.0'
         return expect(slsart.impl.serverlessRunner({})).to.eventually.be.rejected
           .then(() => { slsart.constants.CompatibleServerlessSemver = slsVersion })
       })
@@ -1047,7 +1047,7 @@ scenarios:
       it('writes default values to the default file',
         () => BbPromise.resolve()
           .then(() => {
-            slsart.impl.generateScript = () => ({ foo: 'bar' })
+            slsart.impl.generateScript = () => (JSON.stringify({ foo: 'bar' }))
             return slsart.script({})
           })
           .finally(() => {
@@ -1058,7 +1058,7 @@ scenarios:
       it('write default values to a new file with debug and trace',
         () => BbPromise.resolve()
           .then(() => {
-            slsart.impl.generateScript = () => ({ foo: 'bar' })
+            slsart.impl.generateScript = () => (JSON.stringify({ foo: 'bar' }))
             return slsart.script({ out: notAFile, debug: true, trace: true })
           })
           .finally(() => {
